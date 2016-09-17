@@ -32,7 +32,7 @@ class Photo(models.Model):
     that there doesn't need to create a django user for it
     album = the album which the photo belongs to.
     """
-    org_link = models.URLField(max_length=300)
+    org_link = models.URLField(verbose_name='The Original Url', max_length=300)
     photo = models.ImageField(upload_to='albums/photos')
     user = models.CharField(max_length=60)
     album = models.ForeignKey('Album', on_delete=models.CASCADE)
