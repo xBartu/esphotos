@@ -1,4 +1,5 @@
 import oauth2
+import json
 from io import BytesIO as bio
 from urllib.request import urlopen as uo
 from django.core.files import File
@@ -9,12 +10,21 @@ class TwitterAPI(object):
     """ The Twitter API to search #carnival hashtag. It's a kind of spider
     that searches the hashtag, download the images if it does not exist.
     TODOS:
-    Implement the methods
     Built tests..
     """
 
-    def __init__(self):
-        pass
+    def __init__(self, consumer_key, consumer_secret, key, secret):
+        """An constructor for the class
+        Params
+        consumer_secret: API App Consumer Secret
+        consumer_key: API App Consumer Key
+        secret: API User Secret
+        key: API User Key
+        """
+        self.consumer_secret = consumer_secret
+        self.consumer_key = consumer_key
+        self.secret = secret
+        self.key = key
 
     def search(self):
         """The search method, serching under Twitter search API
@@ -31,9 +41,11 @@ class TwitterAPI(object):
         )
         token = oauth2.Token(key=self.key, secret=self.secret)
         response, content = oauth2.Client(consumer, token).request(
-                            'RESTAPI', method='GET', body='', headers=None
-                            )
-        return (response, content)
+                'https://api.twitter.com/1.1/search/tweets.json?q=%23carnival&filter=images&count=100',
+                method='GET', body=b'', headers=None
+        )
+        statutes = json.loads(content.decode())["statutes"]
+        return (response, statutes)
 
     def is_downloadable(url):
         """To check the image was downloaded before by checking
@@ -57,3 +69,16 @@ class TwitterAPI(object):
             photo.org_link = url
             photo.user = user
             photo.photo.save(name, File(the_file))
+
+    def walker(self):
+        """ Walking through the tweets, and send the info
+        the download method
+        Paarams
+        tweets: the tweets from search api as json in a list
+        """
+        tweets = self.search()
+        for tweet in tweets:
+            self.add_photo(
+                    tweet["user"]["name"],
+                    tweet["extended_entities"]["media"][0]["media_url"]
+            )
