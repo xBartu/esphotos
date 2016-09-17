@@ -33,7 +33,7 @@ class Photo(models.Model):
     album = the album which the photo belongs to.
     """
     org_link = models.URLField(max_length=300)
-    photo = models.ImageField(upload_to='photos')
+    photo = models.ImageField(upload_to='albums/photos')
     user = models.CharField(max_length=60)
     album = models.ForeignKey('Album', on_delete=models.CASCADE)
 

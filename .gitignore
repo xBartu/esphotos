@@ -2,3 +2,5 @@
 *.pyc
 # Sql files must be ignored
 *.sqlite3
+# Directories
+albums/photos
