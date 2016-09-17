@@ -1,4 +1,4 @@
 # Compiled files must be ignored
 *.pyc
 # Sql files must be ignored
-*.sqlite
+*.sqlite3
