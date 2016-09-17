@@ -3,4 +3,4 @@
 # Sql files must be ignored
 *.sqlite3
 # Directories
-albums/photos
+the_project/albums/photos
