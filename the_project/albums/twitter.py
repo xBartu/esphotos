@@ -1,3 +1,6 @@
+from io import BytesIO as bio
+from urllib.request import urlopen as uo
+from django.core.files import File
 from .models import Photo
 
 
@@ -21,7 +24,7 @@ class TwitterAPI(object):
         there will be more space in RAM and also the speed will be improved.
         """
 
-    def is_downloadable(self, url):
+    def is_downloadable(url):
         """To check the image was downloaded before by checking
         whether the url of picture is on database
         Params
@@ -29,10 +32,17 @@ class TwitterAPI(object):
         Returns
         True if it doesn't exist on db, else false
         """
-        return True if not Photo.objects.filter(org_link=self.url) else False
+        return True if not Photo.objects.filter(org_link=url) else False
 
-    def download(self):
-        """To download the photo if it doesn't exist according to
+    def add_photo(self, user, url):
+        """To add and download the photo if it doesn't exist according to
         is_downloadable method
+        TODO: add form to valid the data
         """
-        pass
+        if self.is_downloadable(url):
+            name = url.split('/')[-1]
+            the_file = bio(uo(url).read())
+            photo = Photo()
+            photo.org_link = url
+            photo.user = user
+            photo.photo.save(name, File(the_file))
