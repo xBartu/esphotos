@@ -12,6 +12,12 @@ class Album(models.Model):
     name = models.CharField(max_length=25)
     total_photo = models.PositiveIntegerField(default=0)
 
+    def __str__(self):
+        """ Returns
+        The name of the photo
+        """
+        return "{}".format(self.name)
+
 
 class Photo(models.Model):
     """The photo model.
@@ -30,3 +36,9 @@ class Photo(models.Model):
     photo = models.ImageField(upload_to='photos')
     user = models.CharField(max_length=60)
     album = models.ForeignKey('Album', on_delete=models.CASCADE)
+
+    def __str__(self):
+        """Returns
+        the name of the user and id of the photo
+        """
+        return "{}-{}".format(self.user, self.pk)
