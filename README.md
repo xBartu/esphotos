@@ -22,6 +22,7 @@ method:
 `virtualenv -p python3 esphotos`(the name can be changed)
 
 **Email Server**
+
 You must edit the following-up part in `the_project/the_project/.py`
 
 `#E-mail Settings
