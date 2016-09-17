@@ -20,3 +20,16 @@ You need to create your enviorement by using virtualenv and python3.
 
 method:
 `virtualenv -p python3 esphotos`(the name can be changed)
+
+**Email Server**
+
+You must edit the following-up part in `the_project/the_project/.py`
+
+`#E-mail Settings
+EMAIL_HOST = '' # Host
+
+EMAIL_HOST_USER = '' # Username
+
+EMAIL_HOST_PASSWORD = '' # Password
+
+EMAIL_PORT = 0 # Port Number`
