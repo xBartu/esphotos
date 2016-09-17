@@ -23,8 +23,8 @@ method:
 
 **Email Server**
 
-You must edit **\#E-mail Settings** part in `the_project/the_project/.py`
+You must edit **\#E-mail Settings** part in `the_project/the_project/settings.py`
 
 **Twitter API Settings**
 
-You need to change **\#Twitter API settings** in  `the_project/the_project/.py`. You get them from https://apps.twitter.com/
+You need to change **\#Twitter API settings** in  `the_project/the_project/settings.py`. You get them from https://apps.twitter.com/
