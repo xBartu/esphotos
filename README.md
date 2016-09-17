@@ -25,11 +25,15 @@ method:
 
 You must edit the following-up part in `the_project/the_project/.py`
 
-`#E-mail Settings
-EMAIL_HOST = '' # Host
+#E-mail Settings
+`EMAIL_HOST = '' # Host`
 
-EMAIL_HOST_USER = '' # Username
+`EMAIL_HOST_USER = '' # Username`
 
-EMAIL_HOST_PASSWORD = '' # Password
+`EMAIL_HOST_PASSWORD = '' # Password`
 
-EMAIL_PORT = 0 # Port Number`
+`EMAIL_PORT = 0 # Port Number`
+
+
+#Twitter API Settings
+You need to change Twitter API settings in . `the_project/the_project/.py`. You get them from https://apps.twitter.com/
