@@ -126,3 +126,10 @@ EMAIL_HOST_USER = '' # Username
 EMAIL_HOST_PASSWORD = '' # Password
 EMAIL_PORT = 0 # Port Number
 EMAIL_USE_TLS = True
+
+#Twitter API
+CONSUMER_KEY = '' 
+CONSUMER_SECRET = ''
+KEY = ''
+SECRET = ''
+
