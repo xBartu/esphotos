@@ -11,7 +11,8 @@ def esphoto_email(num):
     bcc: bcc email
     email = EmailMessage instance
     """
-    if num <= 500 and num % 100 == 0:
+    num = int(num)
+    if num != 0 and num <= 500 and num % 100 == 0:
         to = ['demirkiran.bartud@gmail.com']
         subject = '#carnival has {} photos'.format(num)
         body = 'I\'m awesome'
