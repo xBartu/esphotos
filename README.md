@@ -26,6 +26,7 @@ method:
 You must edit the following-up part in `the_project/the_project/.py`
 
 **E-mail Settings**
+
 `EMAIL_HOST = '' # Host`
 
 `EMAIL_HOST_USER = '' # Username`
@@ -35,4 +36,5 @@ You must edit the following-up part in `the_project/the_project/.py`
 `EMAIL_PORT = 0 # Port Number`
 
 **Twitter API Settings**
+
 You need to change Twitter API settings in . `the_project/the_project/.py`. You get them from https://apps.twitter.com/
