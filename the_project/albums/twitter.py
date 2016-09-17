@@ -1,3 +1,6 @@
+from .models import Photo
+
+
 class TwitterAPI(object):
     """ The Twitter API to search #carnival hashtag. It's a kind of spider
     that searches the hashtag, download the images if it does not exist.
@@ -26,7 +29,7 @@ class TwitterAPI(object):
         Returns
         True if it doesn't exist on db, else false
         """
-        pass
+        return True if not Photo.objects.filter(org_link=self.url) else False
 
     def download(self):
         """To download the photo if it doesn't exist according to
