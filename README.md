@@ -23,18 +23,8 @@ method:
 
 **Email Server**
 
-You must edit the following-up part in `the_project/the_project/.py`
-
-**E-mail Settings**
-
-`EMAIL_HOST = '' # Host`
-
-`EMAIL_HOST_USER = '' # Username`
-
-`EMAIL_HOST_PASSWORD = '' # Password`
-
-`EMAIL_PORT = 0 # Port Number`
+You must edit **\#E-mail Settings** part in `the_project/the_project/.py`
 
 **Twitter API Settings**
 
-You need to change Twitter API settings in . `the_project/the_project/.py`. You get them from https://apps.twitter.com/
+You need to change **\#Twitter API settings** in  `the_project/the_project/.py`. You get them from https://apps.twitter.com/
