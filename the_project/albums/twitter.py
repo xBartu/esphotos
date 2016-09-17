@@ -3,7 +3,11 @@ import json
 from io import BytesIO as bio
 from urllib.request import urlopen as uo
 from django.core.files import File
+from django.db.models import F
+from django.shortcuts import get_object_or_404
 from .models import Photo
+from .models import Album
+from .utils import esphoto_email
 
 
 class TwitterAPI(object):
@@ -57,18 +61,25 @@ class TwitterAPI(object):
         """
         return True if not Photo.objects.filter(org_link=url) else False
 
-    def add_photo(self, user, url):
+    def add_photo(self, user, url, album_id):
         """To add and download the photo if it doesn't exist according to
         is_downloadable method
         TODO: add form to valid the data
         """
         if self.is_downloadable(url):
+            album_id = int(album_id)
             name = url.split('/')[-1]
             the_file = bio(uo(url).read())
+            album = get_object_or_404(Album, pk=album_id)
+            album.total_photo = F('total_photo') + 1
+            total_photo = album.total_photo
+            album.save()
             photo = Photo()
             photo.org_link = url
             photo.user = user
             photo.photo.save(name, File(the_file))
+            photo.save()
+            esphoto_email(total_photo)
 
     def walker(self):
         """ Walking through the tweets, and send the info
