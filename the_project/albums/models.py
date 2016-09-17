@@ -28,5 +28,5 @@ class Photo(models.Model):
     """
     org_link = models.URLField(max_length=300)
     photo = models.ImageField(upload_to='photos')
-    user = models.CharField(max_lengh=60)
+    user = models.CharField(max_length=60)
     album = models.ForeignKey('Album', on_delete=models.CASCADE)
