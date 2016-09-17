@@ -1,0 +1,3 @@
+{% for album in albums %}
+	<a href="{% url 'albums:album_detail' album.pk %}">{{album.name}}</a>
+{% endfor %}
