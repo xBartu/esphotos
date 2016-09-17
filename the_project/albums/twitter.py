@@ -1,3 +1,4 @@
+import oauth2
 from io import BytesIO as bio
 from urllib.request import urlopen as uo
 from django.core.files import File
@@ -9,6 +10,7 @@ class TwitterAPI(object):
     that searches the hashtag, download the images if it does not exist.
     TODOS:
     Implement the methods
+    Built tests..
     """
 
     def __init__(self):
@@ -22,7 +24,16 @@ class TwitterAPI(object):
         json result of searches.
         Possible improvement is to record the last tweet ID. Ib that way,
         there will be more space in RAM and also the speed will be improved.
+        Warning:The method was also used in twitter dev guide..
         """
+        consumer = oauth2.Consumer(
+                key=self.consumer_key, secret=self.consumer_secret
+        )
+        token = oauth2.Token(key=self.key, secret=self.secret)
+        response, content = oauth2.Client(consumer, token).request(
+                            'RESTAPI', method='GET', body='', headers=None
+                            )
+        return (response, content)
 
     def is_downloadable(url):
         """To check the image was downloaded before by checking
