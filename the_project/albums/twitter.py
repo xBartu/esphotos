@@ -75,8 +75,8 @@ class TwitterAPI(Task):
             name = url.split('/')[-1]
             the_file = bio(uo(url).read())
             album = get_object_or_404(Album, pk=album_id)
-            album.total_photo = F('total_photo') + 1
-            total_photo = album.total_photo
+            total_photo = album.total_photo + 1
+            album.total_photo = total_photo
             album.save()
             photo = Photo.objects.create_photo(
                 url, None, user, album
