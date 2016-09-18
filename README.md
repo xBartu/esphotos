@@ -22,7 +22,27 @@ You need to create your enviorement by using virtualenv and python3.
 method:
 `virtualenv -p python3 esphotos`(the name can be changed)
 
-**Django Broker Install**
+**3- Install Requirements**
+
+You need to install the requirements of the file.
+
+`pip install -r requirements.txt`
+
+**4-Make migrations and migrate them
+
+You also need migrations. You can do this by following up codes:
+
+`python manage.py makemigrations`
+`python manage.py migrate`
+`python manage.py makemigrations albums`
+`python manage.py migrate albums`
+
+**5-CelerySettings
+
+You need to set the cellery setting via admin panel. If you need help, visit http://docs.celeryproject.org/en/latest/ or create an issue.
+##The other Settings
+
+**jango Broker Install**
 
 To install it, run the following command:
 
@@ -43,3 +63,7 @@ You must edit **\#E-mail Settings** part in `the_project/the_project/settings.py
 **Twitter API Settings**
 
 You need to change **\#Twitter API settings** in  `the_project/the_project/settings.py`. You get them from https://apps.twitter.com/
+
+**Facebook AppID**
+
+you need to get an Facebook App  ID from https://developers.facebook.com/apps. And add it to templates/albums/base.html.
