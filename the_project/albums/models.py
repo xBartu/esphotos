@@ -1,3 +1,6 @@
+# Strong assumption: The user model is need to be created. In that use,
+# there is no need the user model. In production, you can use classic user
+# model of django
 from django.db import models
 
 
@@ -53,11 +56,15 @@ class Photo(models.Model):
     that there doesn't need to create a django user for it
     album: the album which the photo belongs to.
     objects: It's the photo create Manager
+    creaated_at: the adding/storing time of photo
+    number_of_likes: the number of likes were gotten by photo
     """
     org_link = models.URLField(verbose_name='The Original Url', max_length=300)
     photo = models.ImageField(upload_to='albums/photos')
     user = models.CharField(max_length=60)
     album = models.ForeignKey('Album', on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True, null=True)
+    number_of_likes = models.PositiveIntegerField(default=0)
     objects = PhotoManager()
 
     def __str__(self):
@@ -65,3 +72,21 @@ class Photo(models.Model):
         the name of the user and id of the photo
         """
         return "{}-{}".format(self.user, self.pk)
+
+
+class PhotoLike(models.Model):
+    """The model for storing the likes
+    Args
+    photo: the photo object
+    user: who liked the photo
+    is_liked: whether the action user was liked, it's not good idea to delete
+    the object from the database for unlike operation
+    """
+    photo = models.ForeignKey('Photo', on_delete=models.CASCADE)
+    user = models.CharField(max_length=60)
+    is_liked = models.BooleanField(default=True)
+
+    def __str__(self):
+        """The functioni to make objects name understable for admin panel.
+        """
+        return "{}-{}-{}".format(self.user, self.is_liked, self.photo.pk)
