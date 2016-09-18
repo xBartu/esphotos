@@ -26,7 +26,7 @@ class AlbumDetail(ListView):
     """The Album Detail view as class based. It's still good fit
     for that view.
     Assumption: Pictures are public, no need for being logged in
-    Args:
+    Args
     template_name: the path way of the html template
     context_object_name: the model's name
     methods:
@@ -38,6 +38,22 @@ class AlbumDetail(ListView):
     def get_queryset(self):
         self.album = get_object_or_404(Album, pk=self.kwargs['pk'])
         return Photo.objects.filter(album=self.album).all()
+
+
+class PopularPhotos(ListView):
+    """ The class to get 7 popular photos in a album
+    Args
+    context_object_name: the name of the model in  model access from template
+    methods
+    get_queryset: gets seven popular photos in album
+    """
+    context_object_name = 'photos'
+    template_name = 'albums/popular_photos.html'
+
+    def get_queryset(self):
+        self.album = get_object_or_404(Album, pk=self.kwargs['pk'])
+        return Photo.objects.filter(album=self.album) \
+                    .order_by('-number_of_likes')[:7]
 
 
 class AlbumViewSet(generics.ListAPIView):
