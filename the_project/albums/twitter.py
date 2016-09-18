@@ -27,7 +27,7 @@ class TwitterAPI(Task):
         secret: API User Secret
         key: API User Key
         """
-        self.consumer_secret =  settings.CONSUMER_SECRET
+        self.consumer_secret = settings.CONSUMER_SECRET
         self.consumer_key = settings.CONSUMER_KEY
         self.secret = settings.SECRET
         self.key = settings.KEY
@@ -61,7 +61,9 @@ class TwitterAPI(Task):
         Returns
         True if it doesn't exist on db, else false
         """
-        return True if not Photo.objects.filter(org_link=url) else False
+        if not Photo.objects.filter(org_link=url) and '_' not in url:
+            return True
+        return False
 
     def add_photo(self, user, url, album_id):
         """To add and download the photo if it doesn't exist according to
@@ -76,14 +78,12 @@ class TwitterAPI(Task):
             album.total_photo = F('total_photo') + 1
             total_photo = album.total_photo
             album.save()
-            photo = Photo()
-            photo.org_link = url
-            photo.user = user
+            photo = Photo.objects.create_photo(
+                url, None, user, album
+            )
             photo.photo.save(name, File(the_file))
-            
             photo.save()
             esphoto_email(total_photo)
-
 
     def walker(self):
         """ Walking through the tweets, and send the info
@@ -94,11 +94,10 @@ class TwitterAPI(Task):
         tweets = self.search()[1]
         for tweet in tweets:
             try:
-                print(tweet["user"]["name"])
                 self.add_photo(
                         tweet["user"]["name"],
                         tweet["extended_entities"]["media"][0]["media_url"],
-    		            1
+                        1
                 )
             except:
                 pass

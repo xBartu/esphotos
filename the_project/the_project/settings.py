@@ -132,10 +132,10 @@ EMAIL_PORT = 0 # Port Number
 EMAIL_USE_TLS = True
 
 #Twitter API
-CONSUMER_KEY = 'IeDcK2jiSbJdH08TqlyATH5v4' # App Consumer Key
-CONSUMER_SECRET = 'I2z3uMWEWwO3DKKtdmBmGV0GMMXkkrAvah24K0nyFI4K8kva1Y' # App Consumer Secret
-KEY = '28773072-n5oOtNS7Vl8edFtIxsQ1x3VUKJWhzEWi81yYL6Ffo' # Access Token Key
-SECRET = 'WlYVqsK5ERI1AZIBt7aeOt0T6qkDMk7NiyZuBcYiYDkvI' # Access Token
+CONSUMER_KEY = '' # App Consumer Key
+CONSUMER_SECRET = '' # App Consumer Secret
+KEY = '' # Access Token Key
+SECRET = '' # Access Token
 
 #Djcelery Settings
 djcelery.setup_loader()
