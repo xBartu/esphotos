@@ -1,7 +1,11 @@
 from django.shortcuts import get_object_or_404
+from rest_framework import generics
 from django.views.generic import ListView
 from .models import Album
 from .models import Photo
+from .serializers import AlbumSerializer
+from .serializers import PhotoSerializer
+from .serializers import SinglePhotoSerializer
 
 
 class AlbumList(ListView):
@@ -34,3 +38,47 @@ class AlbumDetail(ListView):
     def get_queryset(self):
         self.album = get_object_or_404(Album, pk=self.kwargs['pk'])
         return Photo.objects.filter(album=self.album).all()
+
+
+class AlbumViewSet(generics.ListAPIView):
+    """API Endpoint that user can view albums in the db
+    Args
+    queryset: The model for being serializered
+    serializer_class: the class from serializer.py
+    """
+    queryset = Album.objects.all()
+    serializer_class = AlbumSerializer
+
+
+class AlbumDetailViewSet(generics.ListAPIView):
+    """API Endpoint that user can view the photos of the whole photos in
+    a album
+    Returns
+    the whole photo objects
+    """
+    serializer_class = PhotoSerializer
+
+    def get_queryset(self):
+        self.album = get_object_or_404(Album, pk=self.kwargs["album_id"])
+        queryset = Photo.objects.filter(album=self.album).all()
+        return queryset
+
+
+class SinglePhotoViewSet(generics.ListAPIView):
+    """API endpoint that user can view the single photo
+    according to pk of the photo
+    Args
+    serialzier_class: the class from serializer.py
+    Methods:
+    get_queryset: The model for being serializered will be
+    returned
+    """
+    serializer_class = SinglePhotoSerializer
+
+    def get_queryset(self):
+        """ A method  to get photo object
+        Returns
+        the object according to pk of the Photo
+        """
+        queryset = Photo.objects.get(pk=self.kwargs["pk"])
+        return queryset
