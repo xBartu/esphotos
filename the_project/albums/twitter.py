@@ -1,23 +1,25 @@
 import oauth2
 import json
+from celery import Task
 from io import BytesIO as bio
 from urllib.request import urlopen as uo
 from django.core.files import File
 from django.db.models import F
 from django.shortcuts import get_object_or_404
+from the_project import settings
 from .models import Photo
 from .models import Album
 from .utils import esphoto_email
 
 
-class TwitterAPI(object):
+class TwitterAPI(Task):
     """ The Twitter API to search #carnival hashtag. It's a kind of spider
     that searches the hashtag, download the images if it does not exist.
     TODOS:
     Built tests..
     """
 
-    def __init__(self, consumer_key, consumer_secret, key, secret):
+    def __init__(self):
         """An constructor for the class
         Params
         consumer_secret: API App Consumer Secret
@@ -25,10 +27,10 @@ class TwitterAPI(object):
         secret: API User Secret
         key: API User Key
         """
-        self.consumer_secret = consumer_secret
-        self.consumer_key = consumer_key
-        self.secret = secret
-        self.key = key
+        self.consumer_secret =  settings.CONSUMER_SECRET
+        self.consumer_key = settings.CONSUMER_KEY
+        self.secret = settings.SECRET
+        self.key = settings.KEY
 
     def search(self):
         """The search method, serching under Twitter search API
@@ -48,10 +50,10 @@ class TwitterAPI(object):
                 'https://api.twitter.com/1.1/search/tweets.json?q=%23carnival&filter=images&count=100',
                 method='GET', body=b'', headers=None
         )
-        statutes = json.loads(content.decode())["statutes"]
+        statutes = json.loads(content.decode())["statuses"]
         return (response, statutes)
 
-    def is_downloadable(url):
+    def is_downloadable(self, url):
         """To check the image was downloaded before by checking
         whether the url of picture is on database
         Params
@@ -87,9 +89,14 @@ class TwitterAPI(object):
         Paarams
         tweets: the tweets from search api as json in a list
         """
-        tweets = self.search()
+        tweets = self.search()[1]
         for tweet in tweets:
-            self.add_photo(
-                    tweet["user"]["name"],
-                    tweet["extended_entities"]["media"][0]["media_url"]
-            )
+            try:
+                print(tweet["user"]["name"])
+                self.add_photo(
+                        tweet["user"]["name"],
+                        tweet["extended_entities"]["media"][0]["media_url"],
+    		            0
+                )
+            except:
+                pass
