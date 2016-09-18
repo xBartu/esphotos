@@ -87,6 +87,9 @@ class PhotolikeManager(models.Manager):
         )
         return obj or like
 
+    def unlike(self, photo, user):
+        self.update(photo=photo, user=user, is_liked=False)
+
 
 class Photolike(models.Model):
     """The model for storing the likes
@@ -99,6 +102,7 @@ class Photolike(models.Model):
     photo = models.ForeignKey('Photo', on_delete=models.CASCADE)
     user = models.CharField(max_length=60)
     is_liked = models.BooleanField(default=True)
+    objects = PhotolikeManager
 
     def __str__(self):
         """The functioni to make objects name understable for admin panel.
