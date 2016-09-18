@@ -37,6 +37,8 @@ class PhotoManager(models.Manager):
         user: the name of the user who the photo belongs to
         album: Album object that the photo relates to
         """
+        album.total_photo += 1
+        album.save()
         photo = self.create(
             org_link=org_link, photo=photo, user=user, album=album
         )

@@ -75,15 +75,13 @@ class TwitterAPI(Task):
             name = url.split('/')[-1]
             the_file = bio(uo(url).read())
             album = get_object_or_404(Album, pk=album_id)
-            total_photo = album.total_photo + 1
-            album.total_photo = total_photo
             album.save()
             photo = Photo.objects.create_photo(
                 url, None, user, album
             )
             photo.photo.save(name, File(the_file))
             photo.save()
-            esphoto_email(total_photo)
+            esphoto_email(album.total_photo)
 
     def walker(self):
         """ Walking through the tweets, and send the info
