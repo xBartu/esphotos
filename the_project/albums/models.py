@@ -16,7 +16,7 @@ class Album(models.Model):
         """ Returns
         The name of the photo
         """
-        return "{}".format(self.name)
+        return "{}- {}".format(self.name, self.pk)
 
 
 class Photo(models.Model):

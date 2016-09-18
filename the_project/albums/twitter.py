@@ -72,7 +72,7 @@ class TwitterAPI(Task):
             album_id = int(album_id)
             name = url.split('/')[-1]
             the_file = bio(uo(url).read())
-            album = get_object_or_404(Album, album_id)
+            album = get_object_or_404(Album, pk=album_id)
             album.total_photo = F('total_photo') + 1
             total_photo = album.total_photo
             album.save()
@@ -80,8 +80,10 @@ class TwitterAPI(Task):
             photo.org_link = url
             photo.user = user
             photo.photo.save(name, File(the_file))
+            
             photo.save()
             esphoto_email(total_photo)
+
 
     def walker(self):
         """ Walking through the tweets, and send the info
@@ -96,7 +98,7 @@ class TwitterAPI(Task):
                 self.add_photo(
                         tweet["user"]["name"],
                         tweet["extended_entities"]["media"][0]["media_url"],
-    		            0
+    		            1
                 )
             except:
                 pass
