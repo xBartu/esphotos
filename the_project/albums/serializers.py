@@ -28,7 +28,7 @@ class PhotoSerializer(serializers.ModelSerializer):
         fields: The fields in the model to be serializered
         """
         model = Photo
-        fields = ('org_link', 'photo', 'user')
+        fields = ('org_link', 'photo', 'user', 'number_of_likes')
 
 
 class SinglePhotoSerializer(serializers.ModelSerializer):
@@ -42,4 +42,4 @@ class SinglePhotoSerializer(serializers.ModelSerializer):
         fields: The fields in the model to be serializered
         """
         model = Photo
-        fields = ('org_link', 'photo', 'user', 'album')
+        fields = ('org_link', 'photo', 'user', 'album', 'number_of_likes')
