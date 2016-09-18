@@ -89,6 +89,10 @@ class TwitterAPI(Task):
         Paarams
         tweets: the tweets from search api as json in a list
         """
+        try:
+            al = Album.objects.get(pk=1)
+        except:
+            Album.objects.create(name="tag")
         tweets = self.search()[1]
         for tweet in tweets:
             try:
