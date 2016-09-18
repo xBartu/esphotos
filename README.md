@@ -6,6 +6,7 @@ esphotos is a Django application to store photos in photo albums
 **NOTE:**
 
 * You need to install pip in your machine firstly
+* I use Django-Database-broker. If you use it on production, I suggest using more robust and advanced broker. In this case, do not forget to change BROKER_URL in `the_project/the_project/settings.py`
 
 **1- Install virtualenv**
 
