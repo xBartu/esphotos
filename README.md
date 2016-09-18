@@ -22,6 +22,12 @@ You need to create your enviorement by using virtualenv and python3.
 method:
 `virtualenv -p python3 esphotos`(the name can be changed)
 
+** Django Broker Install **
+
+To install it, run the following command:
+
+`python manage.py migrate kombu_transport_django`
+
 **Email Server**
 
 You must edit **\#E-mail Settings** part in `the_project/the_project/settings.py`
