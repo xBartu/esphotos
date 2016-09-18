@@ -8,11 +8,8 @@ class AlbumTestCase(TestCase):
     """The Album Test Class.
     """
     def setUp(self):
-        self.spider = Clien()
-        album = Album.objects.get(name="tag")
-        if album:  # in case it exists
-            album.remove()
-        Album.objects.create(name="album")
+        self.client = Client()
+        Album.objects.create(name="tag")
 
     def test_album_is_created(self):
         """The test for checking the django created the class.
@@ -58,9 +55,6 @@ class PhotoTestCase(TestCase):
         """ Test set up
         """
         self.client = Client()
-        album = Album.objects.get(pk=1)
-        if not album:
-            album = Album.objects.create(name="tag")
         Photo.objects.create_photo(
             "https://www.facebook.com/logo.jgp", None,
             "bartu", album
