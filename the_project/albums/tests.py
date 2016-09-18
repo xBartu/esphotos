@@ -4,12 +4,12 @@ from .models import Album
 from .models import Photo
 
 
-class AlbumTestCase(TestCase):
-    """The Album Test Class.
+class AlbumsTestCase(TestCase):
+    """The Albums Test Class.
     """
     def setUp(self):
         self.client = Client()
-        Album.objects.create(name="tag")
+        self.album = Album.objects.create(name="tag")
 
     def test_album_is_created(self):
         """The test for checking the django created the class.
@@ -47,23 +47,15 @@ class AlbumTestCase(TestCase):
         res = self.client.get("/api/album/1")
         self.assertEqual(res.status_code, 200)
 
-
-class PhotoTestCase(TestCase):
-    """ Checking the functionality of photo creation
-    """
-    def setUp(self):
-        """ Test set up
-        """
-        self.client = Client()
-        Photo.objects.create_photo(
-            "https://www.facebook.com/logo.jgp", None,
-            "bartu", album
-        )
-
     def check_photo_created(self):
         """ Test to check the photo was created correctly,
         and test also the number of photo was updated
         """
+        Photo.objects.create_photo(
+                "https://www.facebook.com/logo.jgp", None,
+                "bartu", self.album
+        )
+
         photo = Photo.objects.get(pk=1)
         self.assertEqual(photo.album.name, "tag")
         self.assertEqual(photo.user, "bartu")
