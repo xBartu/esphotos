@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 
 import os
+import djcelery
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -37,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'djcelery',
+    'kombu.transport.django',
     'albums',
 ]
 
@@ -128,8 +131,12 @@ EMAIL_PORT = 0 # Port Number
 EMAIL_USE_TLS = True
 
 #Twitter API
-CONSUMER_KEY = '' 
-CONSUMER_SECRET = ''
-KEY = ''
-SECRET = ''
+CONSUMER_KEY = '' # App Consumer Key
+CONSUMER_SECRET = '' # App Consumer Secret
+KEY = '' # Access Token Key
+SECRET = '' # Access Token
+
+#Djcelery Settings
+djcelery.setup_loader()
+BROKER_URL = 'django://'
 

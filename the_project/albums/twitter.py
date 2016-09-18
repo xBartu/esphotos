@@ -70,7 +70,7 @@ class TwitterAPI(object):
             album_id = int(album_id)
             name = url.split('/')[-1]
             the_file = bio(uo(url).read())
-            album = get_object_or_404(Album, pk=album_id)
+            album = get_object_or_404(Album, album_id)
             album.total_photo = F('total_photo') + 1
             total_photo = album.total_photo
             album.save()
