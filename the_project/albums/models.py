@@ -74,7 +74,21 @@ class Photo(models.Model):
         return "{}-{}".format(self.user, self.pk)
 
 
-class PhotoLike(models.Model):
+class PhotolikeManager(models.Manager):
+    """Manager for helpers of Photolike model
+    Methods
+    like: it creates likes if the user and photo doesn't match
+    or is_liked is false.
+    unlike: it makes is_liked false
+    """
+    def like(self, photo, user):
+        obj, like = self.update_or_create(
+                photo=photo, user=user, is_liked=True
+        )
+        return obj or like
+
+
+class Photolike(models.Model):
     """The model for storing the likes
     Args
     photo: the photo object
